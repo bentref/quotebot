@@ -1,5 +1,5 @@
 import discord
-from . import wolfram_language_functions as wlf
+import wolfram_language_functions as wlf
 
 client = discord.Client()
 
