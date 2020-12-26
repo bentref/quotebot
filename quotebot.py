@@ -6,7 +6,7 @@ client = discord.Client()
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
-    msg_hist = read_message_history(client.guilds[0])
+    msg_hist = await read_message_history(client.guilds[0])
     print(msg_hist)
     
 @client.event
@@ -26,18 +26,21 @@ async def read_message_history(guild, channels=False):
     Read the message history, and return a dictionary with one dataset 
     for each user--a dictionary with the list of messages they've sent
     {user1: [message1, message2, message3], user2: ...}
+    
+    TODO: Need to separate into different datasets for diff channels
     """
     datasets = {}
-    user_ids = [user.id for user in guild.users]
-    for channel in channels or guild.channels:
-        messages = await channel.history(limit=10).flatten()
-        for user_id in user_ids:
-            datasets[user_id] = []
-            for i in range(len(messages)): # For efficiency, delete item from messages list when it is assigned to a user
+    user_ids = [user.id for user in guild.members]
+    print(guild.members)
+    for user_id in user_ids:
+        datasets[user_id] = []
+        for channel in (channels or guild.text_channels):
+            messages = await channel.history(limit=10).flatten()
+            for i in range(len(messages)): # Could maybe delete item as it is matched to user, but for now that causes problems
                 if messages[i].author.id == user_id:
-                    print(messages[i])
+                    # print(messages[i].content)
                     datasets[user_id].append(messages[i])
-                    del messages[i]
+                    # del messages[i]
     return datasets
   
 
