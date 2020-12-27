@@ -18,10 +18,6 @@ async def on_message(message):
     elif wlf.bad_vibe(message.content):
         user_id = message.author.id
         await message.channel.send(f"<@!{user_id}> That's not a very positive vibe :((((((((")
-    if message.content.startswith('!member'):
-        for guild in client.guilds:
-            for member in guild.members:
-                print(member) # or do whatever you wish with the member detail
 
         
 async def read_message_history(guild, channels=False):
@@ -38,7 +34,7 @@ async def read_message_history(guild, channels=False):
     """
     datasets = {}
     user_ids = [user.id for user in guild.members]
-    print(guild.members)
+    # ~ print(guild.members)
     for user_id in user_ids:
         datasets[user_id] = []
         for channel in (channels or guild.text_channels):
@@ -46,7 +42,7 @@ async def read_message_history(guild, channels=False):
             for i in range(len(messages)): # Could maybe delete item as it is matched to user, but for now that causes problems
                 if messages[i].author.id == user_id:
                     # print(messages[i].content)
-                    datasets[user_id].append(messages[i])
+                    datasets[user_id].append(messages[i].content)
                     # del messages[i]
     return datasets
   
