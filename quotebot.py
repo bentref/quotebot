@@ -1,7 +1,9 @@
 import discord
 import wolfram_language_functions as wlf
 
-client = discord.Client()
+intents = discord.Intents.default()
+intents.members = True
+client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
@@ -16,6 +18,11 @@ async def on_message(message):
     elif wlf.bad_vibe(message.content):
         user_id = message.author.id
         await message.channel.send(f"<@!{user_id}> That's not a very positive vibe :((((((((")
+    if message.content.startswith('!member'):
+        for guild in client.guilds:
+            for member in guild.members:
+                print(member) # or do whatever you wish with the member detail
+
         
 async def read_message_history(guild, channels=False):
     """
@@ -27,7 +34,7 @@ async def read_message_history(guild, channels=False):
     for each user--a dictionary with the list of messages they've sent
     {user1: [message1, message2, message3], user2: ...}
     
-    TODO: Need to separate into different datasets for diff channels
+    TODO: Maybe separate into different datasets for different channels?
     """
     datasets = {}
     user_ids = [user.id for user in guild.members]
