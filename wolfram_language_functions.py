@@ -13,7 +13,6 @@ def bad_vibe(message):
 def predict_next_word(database, user, phrase, probabilities=False):
     messages_list = [wl.TextWords(message) for message in database[user]]
     phrase_list = wl.TextWords(phrase)
-    print(locals())
     if probabilities:
         return session.evaluate(wl.SequencePredict(messages_list)(phrase_list, "Probabilities"))
     else:
