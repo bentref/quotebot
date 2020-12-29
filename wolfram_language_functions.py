@@ -14,7 +14,6 @@ def predict_next_word(database, user, phrase):
     long_message = " ".join(database[user])
     messages_list = [wl.TextWords(long_message)]  # message) for message in database[user]]
     phrase_list = wl.TextWords(phrase)
-    print(locals())
     return session.evaluate(wl.SequencePredict(messages_list)(phrase_list))
 
 
