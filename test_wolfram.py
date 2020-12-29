@@ -8,5 +8,5 @@ fake_messages = ["bla I love math",
 name = "user"
 wrapper_dict = {name: fake_messages}
 
-print(wlf.predict_next_word(wrapper_dict, name, "I love"))
+print(wlf.predict_next_word(wrapper_dict, name, "I love", True))
 print("done")
