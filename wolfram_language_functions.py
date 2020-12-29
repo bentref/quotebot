@@ -1,6 +1,5 @@
 from wolframclient.evaluation import WolframLanguageSession
-from wolframclient.language import wl, Global, wlexpr
-import re
+from wolframclient.language import wl
 session = WolframLanguageSession()
 
 
@@ -12,8 +11,10 @@ def bad_vibe(message):
 
 
 def predict_next_word(database, user, phrase):
-    messages_list = []
-    phrase_list = re.findall(r'\w+', phrase)
+    long_message = " ".join(database[user])
+    messages_list = [wl.TextWords(long_message)]  # message) for message in database[user]]
+    phrase_list = wl.TextWords(phrase)
+    print(locals())
     return session.evaluate(wl.SequencePredict(messages_list)(phrase_list))
 
 
