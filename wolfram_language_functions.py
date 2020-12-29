@@ -10,12 +10,14 @@ def bad_vibe(message):
         return False
 
 
-def predict_next_word(database, user, phrase):
-    long_message = " ".join(database[user])
-    messages_list = [wl.TextWords(long_message)]  # message) for message in database[user]]
+def predict_next_word(database, user, phrase, probabilities=False):
+    messages_list = [wl.TextWords(message) for message in database[user]]
     phrase_list = wl.TextWords(phrase)
     print(locals())
-    return session.evaluate(wl.SequencePredict(messages_list)(phrase_list))
+    if probabilities:
+        return session.evaluate(wl.SequencePredict(messages_list)(phrase_list, "Probabilities"))
+    else:
+        return session.evaluate(wl.SequencePredict(messages_list)(phrase_list))
 
 
 # def predict_finished_phrase(database, user, phrase, length_remaining):
