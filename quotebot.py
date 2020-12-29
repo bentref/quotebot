@@ -21,9 +21,9 @@ async def on_message(message):
     if message.content.startswith('!predict'):
         # starting a message with !predict will, first time, build the datasets
         # If the datasets are already built, it will just use that
-        print("Original content: ", message.content[9:])
+        print("Original content:", message.content[9:])
         predicted = await predict_text(message.author.id, message.guild, message.content[9:])
-        print("Predicted next word: ", predicted)
+        print("Predicted next word:", predicted)
 
 async def predict_text(user, guild, phrase, channels=False):  #TODO: Change this to predict_text
     """
