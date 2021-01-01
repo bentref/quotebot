@@ -1,5 +1,6 @@
 import discord
 import wolfram_language_functions as wlf
+import configparser
 
 intents = discord.Intents.default()
 intents.members = True
@@ -49,11 +50,11 @@ async def predict_text(user, guild, phrase, channels=False):  #TODO: Change this
         for user_id in user_ids:
             user_datasets[user_id] = []
             for channel in (channels or guild.text_channels):
-                messages = await channel.history(limit=10).flatten()
+                messages = await channel.history(limit=5).flatten()
                 for i in range(len(messages)): # Could maybe delete item as it is matched to user, but for now that causes problems
                     if messages[i].author.id == user_id:
                         user_datasets[user_id].append(messages[i].content)
-    return wlf.predict_next_word(user_datasets, user, phrase)
+    return wlf.predict_next_word(user_datasets, user, phrase, True)
     
   
 
