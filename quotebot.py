@@ -8,6 +8,9 @@ client = discord.Client(intents=intents)
 
 user_datasets = {} # Initialize user_datasets to empty dict, it has not been populated yet
 
+config = configparser.ConfigParser()
+config.read('config.ini')
+
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
@@ -58,4 +61,4 @@ async def predict_text(user, guild, phrase, channels=False):  #TODO: Change this
     
   
 
-client.run('Nzg1OTk4NjUzODcyOTMwODE3.X9AASg.TY1Ja9qKidLqyodwfog1NGJRSFE')
+client.run(config['DISCORD']['APIKey'])
