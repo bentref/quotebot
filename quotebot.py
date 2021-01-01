@@ -55,7 +55,8 @@ async def predict_text(user, guild, phrase, channels=False):  #TODO: Change this
         for channel in (channels or guild.text_channels):
             messages = await channel.history(limit=None).flatten()
             for m in messages:
-                user_datasets[m.author.id].append(m.content)
+                if not m.content.startswith("!predict"):
+                    user_datasets[m.author.id].append(m.content)
     return wlf.predict_next_word(user_datasets, user, phrase, True)
     
   
