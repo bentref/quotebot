@@ -1,7 +1,11 @@
 import discord
 import wolfram_language_functions as wlf
+import configparser
 
 client = discord.Client()
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 @client.event
 async def on_ready():
@@ -16,4 +20,4 @@ async def on_message(message):
         await message.channel.send(f"<@!{user_id}> That's not a very positive vibe :((((((((")
     
 
-client.run('Nzg1OTk4NjUzODcyOTMwODE3.X9AASg.TY1Ja9qKidLqyodwfog1NGJRSFE')
+client.run(config['DISCORD']['APIKey'])
